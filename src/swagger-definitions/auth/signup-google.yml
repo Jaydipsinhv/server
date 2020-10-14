@@ -1,0 +1,16 @@
+/signup/google:
+  get:
+    tags:
+      - Authentication
+    summary: Register new user with google
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    responses:
+      '200':
+        description: Get user information
+      '400':
+        description: Error while getting features
+        schema:
+          $ref: '#definitions/Error'

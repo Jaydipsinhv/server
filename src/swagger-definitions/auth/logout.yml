@@ -1,0 +1,27 @@
+/logout:
+  post:
+    security:
+      - bearerAuth: []
+    tags:
+      - Authentication
+    summary: User logout
+    description: ''
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    responses:
+      '200':
+        description: logout success
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: User loggout successfully.
+                      
+      '400':
+        description: logout failed
+        schema:
+          $ref: '#definitions/Error'
+ 

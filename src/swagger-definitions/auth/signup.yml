@@ -1,0 +1,44 @@
+/signup:
+  post:
+    tags:
+      - Authentication
+    summary: Register new User
+    description: 
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    parameters:
+      - in: body
+        name: body
+        description: Create user information
+        required: true
+        schema:
+          $ref: '#definitions/registerUser'
+    responses:
+      '200':
+        description: login success
+        schema:
+          $ref: '#definitions/UserResponce'
+
+      '400':
+        description: Error while getting spaces
+        schema:
+          $ref: '#definitions/Error'
+ 
+definitions:
+  registerUser:
+    type: object
+    properties:
+      email:
+        type: string
+        example: test@yopmail.com
+      firstName:
+        type: string
+        example: John
+      lastName:
+        type: string
+        example: Carter
+      password:
+        type: string
+        example: Pwd@123
