@@ -1,0 +1,41 @@
+/login:
+  post:
+    tags:
+      - Authentication
+    summary: User login
+    description: ''
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    parameters:
+      - in: body
+        name: body
+        description: User login
+        required: true
+        schema:
+          $ref: '#definitions/UserCredentials'
+    responses:
+      '200':
+        description: login success
+        schema:
+          $ref: '#definitions/UserResponce'         
+      '400':
+        description: login failed
+        schema:
+          $ref: '#definitions/LoginError'
+ 
+definitions:
+  UserCredentials:
+    type: object
+    required:
+      - login
+      - password
+    properties:
+      email:
+        type: string
+        example: john.doe@email.com
+      password:
+        type: string
+        example: password
+  

@@ -1,0 +1,50 @@
+/user/me:
+  get:
+    tags:
+      - User
+    summary: Get logged user information
+    security:
+      - ApiKeyAuthHeader: []
+      - ApiKeyAuthQuery: []
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    responses:
+      '200':
+        description: Get user information
+        schema:
+          $ref: '#definitions/userInfo'
+      '400':
+        description: Error while getting features
+        schema:
+          $ref: '#definitions/Error'
+ 
+definitions:
+  userInfo:
+    type: object
+    properties:
+      _id:
+        type: string
+        example: 5db054c509da721c35218f53
+      email:
+        type: string
+        example: test@yopmail.com
+      firstName:
+        type: string
+        example: John
+      lastName:
+        type: string
+        example: Carter
+      profile_image:
+        type: string
+        example: image path
+      isActive:
+        type: boolean
+        example: true
+      isDeleted:
+        type: boolean
+        example: false
+      provider:
+        type: array
+        example: ['facebook']

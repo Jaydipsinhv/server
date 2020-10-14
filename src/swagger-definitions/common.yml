@@ -1,0 +1,55 @@
+definitions:
+  Error:
+    type: object
+    properties:
+      error:
+        type: string
+        example: Random error message related with error
+  LoginError:
+    type: object
+    properties:
+      error:
+        type: string
+        example: Invalid email address or password
+  UserResponce:
+    type: object
+    properties:
+      token:
+        type: string
+        example: >-
+          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NT...
+      user:
+        type: object
+        properties:
+          _id:
+            type: string
+            example: 5db054c509da721c35218f53
+          email:
+            type: string
+            example: test@yopmail.com
+          firstName:
+            type: string
+            example: John
+          lastName:
+            type: string
+            example: Carter
+          profile_image:
+            type: string
+            example: image path
+          isActive:
+            type: boolean
+            example: true
+          isDeleted:
+            type: boolean
+            example: false
+          provider:
+            type: array
+            example: ['facebook']
+      message:
+        type: string
+        example: welcome Test user
+securityDefinitions:
+  bearerAuth:
+    type: apiKey
+    in: header
+    name: Authorization
