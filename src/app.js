@@ -11,6 +11,7 @@ const { bugsnagMiddleware } = require('./integration');
 
 const app = express();
 
+console.log('NODE_ENV : ', process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'staging' || process.env.NODE_ENV === 'production') {
   // bugsnag request handling middleware
   app.use(bugsnagMiddleware.requestHandler);
