@@ -9,7 +9,7 @@ const create = async (req) => {
   const category = new CategoryModel(req.body);
   await category.save();
 
-  return req.sendResponse(201, { message: 'Category created successfully', _id: category._id, images: category.images });
+  return req.sendResponse(201, { message: 'Category created successfully' });
 };
 
 module.exports = create;
