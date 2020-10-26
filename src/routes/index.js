@@ -2,6 +2,7 @@ const swaggerUi = require('swagger-ui-express');
 
 const authRoutes = require('./auth');
 const userRoutes = require('./user');
+const categoryRoutes = require('./category');
 const mediaRoutes = require('./media');
 const swaggerRoutes = require('./swagger');
 const { sendResponse } = require('../lib/responseHandler');
@@ -27,7 +28,7 @@ module.exports = (app) => {
   app.use('/', authRoutes);
   app.use('/user', userRoutes);
   app.use('/media', mediaRoutes);
-
+  app.use('/category', categoryRoutes);
   // validate user authentication
   // app.use(isAuthenticated);
 

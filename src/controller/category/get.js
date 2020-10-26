@@ -1,30 +1,67 @@
 const CategoryModel = require('./category.model');
 
 const get = async (req) => {
-  const limit = parseInt(req.query.limit || process.env.LIMIT || 10);
-  const skip = ((req.query.page ? (req.query.page - 1) : 0) * limit);
-
   const filter = {
     isActive: true,
     isDeleted: false,
+    parentId: { $exists: false },
+  };
+  const projection = {
+    name: 1, sequence: 1, subCategory: 1, _id: 0, slug: 1,
+  };
+  const sort = { sequence: 1 };
+  const getSubCategory = {
+    as: 'subCategory',
+    from: 'categories',
+    let: {
+      categoryId: '$_id',
+    },
+    pipeline: [{
+      $match: {
+        $or: [
+          { $expr: { $eq: ['$parentId', '$$categoryId'] } },
+        ],
+      },
+    }, {
+      $sort: sort,
+    }, {
+      $project: projection,
+    }],
   };
 
-  if (req.query.searching) {
-    const regex = req.query.searching.split(' ').join('|');
-    filter.name = { $regex: regex, $options: '$i' };
-  }
-
-  let sortBy = { _id: -1 };
-  if (req.query.sort && req.query.sort.indexOf(',') > 0) {
-    const sortArray = req.query.sort.split(',');
-    sortBy = { [sortArray[0]]: sortArray[1] };
-  }
-
-  const count = await CategoryModel.count(filter);
-  const data = await CategoryModel.find(filter)
-    .sort(sortBy).skip(skip).limit(limit);
-
-  return req.sendResponse(200, { count, data });
+  const data = await CategoryModel.aggregate([
+    {
+      $match: filter,
+    },
+    {
+      $sort: sort,
+    },
+    {
+      $lookup: {
+        as: 'subCategory',
+        from: 'categories',
+        let: {
+          categoryId: '$_id',
+        },
+        pipeline: [{
+          $match: {
+            $or: [
+              { $expr: { $eq: ['$parentId', '$$categoryId'] } },
+            ],
+          },
+        }, {
+          $sort: sort,
+        }, {
+          $lookup: getSubCategory,
+        }, {
+          $project: projection,
+        }],
+      },
+    }, {
+      $project: projection,
+    },
+  ]);
+  return req.sendResponse(200, data);
 };
 
 module.exports = get;
