@@ -16,7 +16,7 @@ const get = async (req) => {
     }
 
     let sortBy = { _id: -1 };
-    if (req.query.sort && req.query.sort.indexOf(',') > 0) {
+    if (req.query.sort && req.query.sort.indexOf(',') >= 0) {
       const sortArray = req.query.sort.split(',');
       sortBy = { [sortArray[0]]: sortArray[1] };
     }
