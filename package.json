@@ -61,11 +61,5 @@
     "lint-staged": "^9.4.2",
     "nodemon": "^1.19.2",
     "prettier-eslint-cli": "^5.0.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint",
-      "pre-push": "npm run lint"
-    }
-  },
+  }
 }
